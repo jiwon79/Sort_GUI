@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 '''
 Data Structure Sort GUI
-made by 19-079 ÀÌÁö¿ø
+made by 19-079 ì´ì§€ì›
 
 Sort index
 1. Bubble sort
@@ -46,7 +47,7 @@ def bubble_sort():
     for k in range(data[1]) :
         changeDataColor_Green(rectangle_list, k)
     
-    # text Ãâ·Â
+    # text ì¶œë ¥
     finishedTime = time.time()
     runtime = finishedTime - startTime
 
@@ -84,7 +85,7 @@ def insertion_sort():
             changeDataColor_Red(rectangle_list, j)
 
 
-    # text Ãâ·Â
+    # text ì¶œë ¥
     finishedTime = time.time()
     runtime = finishedTime - startTime
 
@@ -105,7 +106,7 @@ def selection_sort():
     
     for i in range(data[1]-1):
         min_index = i
-        # ÃÖ¼Ò°ª Ã£´Â Ã³¸®
+        # ìµœì†Œê°’ ì°¾ëŠ” ì²˜ë¦¬
         for k in range(i+1, data[1]):
             if data[0][k] < data[0][min_index]:
                 min_index = k
@@ -119,7 +120,7 @@ def selection_sort():
                     changeDataColor_Green(rectangle_list, l)
 
 
-        # ÃÖ¼Ò°ªÀÇ À§Ä¡¸¦ ¹Ù²ãÁÖ´Â Ã³¸®
+        # ìµœì†Œê°’ì˜ ìœ„ì¹˜ë¥¼ ë°”ê¿”ì£¼ëŠ” ì²˜ë¦¬
         data[0][i], data[0][min_index] = data[0][min_index], data[0][i]
 
         rectangle_list = MakeRectangle(data)
@@ -129,7 +130,7 @@ def selection_sort():
         for l in range(i+2) :
             changeDataColor_Green(rectangle_list, l)
         
-    # text Ãâ·Â
+    # text ì¶œë ¥
     finishedTime = time.time()
     runtime = finishedTime - startTime
 
@@ -170,7 +171,7 @@ def shell_sort():
         gap //= 2
 
 
-    # text Ãâ·Â
+    # text ì¶œë ¥
     finishedTime = time.time()
     runtime = finishedTime - startTime
 
@@ -228,7 +229,7 @@ def quick_sort():
     quick_sort_internal(0, data[1]-1)
 
 
-    # text Ãâ·Â
+    # text ì¶œë ¥
     finishedTime = time.time()
     runtime = finishedTime - startTime
 
@@ -276,7 +277,7 @@ def merge_sort():
     merge_sort_internal(0, data[1])
 
 
-    # text Ãâ·Â
+    # text ì¶œë ¥
     finishedTime = time.time()
     runtime = finishedTime - startTime
 
@@ -303,7 +304,7 @@ def heap_sort():
         data[0][0], data[0][i] = data[0][i], data[0][0]
         heapify(0, i)
 
-    # text Ãâ·Â
+    # text ì¶œë ¥
     finishedTime = time.time()
     runtime = finishedTime - startTime
 
@@ -345,7 +346,7 @@ def heapify(index, size):
 ##################################################################### 
         
 # -----------------------------  GUI  ------------------------------
-# ±âº»
+# ê¸°ë³¸
 root = Tk()
 
 root.title("Sort GUI")
@@ -355,7 +356,7 @@ root.resizable(False, False)
 
 
 #####################################################################
-# data°¡ ÁÖ¾îÁö¸é list·Î ¸¸µé¾îÁÖ´Â fuction
+# dataê°€ ì£¼ì–´ì§€ë©´ listë¡œ ë§Œë“¤ì–´ì£¼ëŠ” fuction
 def MakeList(n) :
     list = []
     for i in range(n) :
@@ -369,13 +370,13 @@ def MakeRectangle(data) :
         list.append([600*i/n, 400-data[0][i], 600*(i+1)/n, 400])
     return list
 
-# data°¡ ÁÖ¾îÁö¸é ±×·ÁÁÜ
+# dataê°€ ì£¼ì–´ì§€ë©´ ê·¸ë ¤ì¤Œ
 def drawRectangle(list) :
     for i in range(len(list)) :
         canvas.create_rectangle(list[i][0], list[i][1], list[i][2], list[i][3], fill="white")
 
 
-# data[i]ÀÇ »öÀ» »¡°£»öÀ¸·Î ¹Ù²Ş
+# data[i]ì˜ ìƒ‰ì„ ë¹¨ê°„ìƒ‰ìœ¼ë¡œ ë°”ê¿ˆ
 def changeDataColor_Red(list, i) :
     canvas.create_rectangle(list[i][0], list[i][1], list[i][2], list[i][3], fill="red")
 
@@ -395,18 +396,18 @@ canvas.create_rectangle(0,0,600,400, fill="yellow")
 
 #####################################################################
 # spinBox
-label_data=Label(root, text="data °³¼ö(1~300)")
+label_data=Label(root, text="data ê°œìˆ˜(1~300)")
 label_data.place(x=650,y=20)
 
 def value_check(self):
     global data
-    label_data.config(text="data °³¼ö(1~300)")
+    label_data.config(text="data ê°œìˆ˜(1~300)")
     valid = False
     if self.isdigit():
         if (int(self) <= 10000 and int(self) >= 1):
             valid = True
             
-            # canvas¿¡ ±×¸®±â
+            # canvasì— ê·¸ë¦¬ê¸°
             n = int(self)
             data = MakeList(n)
             rectangle_list = MakeRectangle(data)
@@ -418,7 +419,7 @@ def value_check(self):
     return valid
 
 def value_error(self):
-    label_data.config(text=str(self) + "¸¦ ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.\n¿Ã¹Ù¸¥ °ªÀ» ÀÔ·ÂÇÏ¼¼¿ä.")
+    label_data.config(text=str(self) + "ë¥¼ ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.\nì˜¬ë°”ë¥¸ ê°’ì„ ì…ë ¥í•˜ì„¸ìš”.")
 
 validate_command = (root.register(value_check), '%P')
 invalid_command = (root.register(value_error), '%P')
@@ -447,7 +448,7 @@ def value_check_speed(self):
     return valid
 
 def value_error_speed(self):
-    label_speed.config(text=str(self) + "¸¦ ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.\n¿Ã¹Ù¸¥ °ªÀ» ÀÔ·ÂÇÏ¼¼¿ä.")
+    label_speed.config(text=str(self) + "ë¥¼ ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.\nì˜¬ë°”ë¥¸ ê°’ì„ ì…ë ¥í•˜ì„¸ìš”.")
 
 validate_command = (root.register(value_check_speed), '%P')
 invalid_command = (root.register(value_error_speed), '%P')
@@ -503,7 +504,7 @@ btn_suffle.place(x=650,y=400)
 btn_sort.place(x=750,y=400)
 
 #####################################################################
-# sort Radio button / 7°³
+# sort Radio button / 7ê°œ
 value1 = IntVar()
 
 bt_1 = Radiobutton(root, text="Bubble sort", value = 1, variable = value1)
