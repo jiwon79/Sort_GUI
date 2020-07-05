@@ -25,27 +25,21 @@ import random
 # -------------------------  Sort fuction  --------------------------
 #####################################################################
 def bubble_sort():
-    global data, LATE
+    global data
     
     startTime = time.time()
     length = data[1] - 1
     for i in range(length) :
         for j in range(length-i) :
-            time.sleep(LATE)
             if data[0][j] > data[0][j+1] :
                 data[0][j], data[0][j+1] = data[0][j+1], data[0][j]
-
+            
+            #time.sleep(0.5)
             rectangle_list = MakeRectangle(data)
+            
             canvas.update()
             canvas.delete("all")
             drawRectangle(rectangle_list) 
-            changeDataColor_Red(rectangle_list, j)
-            
-            for k in range(data[1]-i, data[1]) :
-                changeDataColor_Green(rectangle_list, k)
-    
-    for k in range(data[1]) :
-        changeDataColor_Green(rectangle_list, k)
     
     # text 출력
     finishedTime = time.time()
@@ -65,24 +59,21 @@ def bubble_sort():
 
 #####################################################################
 def insertion_sort():
-    global data, LATE
+    global data
     startTime = time.time()
     
     for i in range(1, data[1]) :
         for j in range(i, 0, -1) :
-            time.sleep(LATE)
-            
             if data[0][j] < data[0][j-1] :
                 data[0][j], data[0][j-1] = data[0][j-1], data[0][j]
             else : 
                 break
             
-            rectangle_list = MakeRectangle(data)
-            canvas.update()
-            canvas.delete("all")
-            drawRectangle(rectangle_list) 
-            
-            changeDataColor_Red(rectangle_list, j)
+        rectangle_list = MakeRectangle(data)
+        
+        canvas.update()
+        canvas.delete("all")
+        drawRectangle(rectangle_list) 
 
 
     # text 출력
@@ -110,25 +101,13 @@ def selection_sort():
         for k in range(i+1, data[1]):
             if data[0][k] < data[0][min_index]:
                 min_index = k
-                
-                rectangle_list = MakeRectangle(data)
-                canvas.update()
-                canvas.delete("all")
-                drawRectangle(rectangle_list)
-                changeDataColor_Red(rectangle_list, k)
-                for l in range(i) :
-                    changeDataColor_Green(rectangle_list, l)
-
-
         # 최소값의 위치를 바꿔주는 처리
         data[0][i], data[0][min_index] = data[0][min_index], data[0][i]
-
+        
         rectangle_list = MakeRectangle(data)
         canvas.update()
         canvas.delete("all")
-        drawRectangle(rectangle_list)
-        for l in range(i+2) :
-            changeDataColor_Green(rectangle_list, l)
+        drawRectangle(rectangle_list)         
         
     # text 출력
     finishedTime = time.time()
@@ -165,8 +144,7 @@ def shell_sort():
             rectangle_list = MakeRectangle(data)
             canvas.update()
             canvas.delete("all")
-            drawRectangle(rectangle_list)
-            changeDataColor_Red(rectangle_list, j)
+            drawRectangle(rectangle_list)  
             
         gap //= 2
 
@@ -204,24 +182,14 @@ def quick_sort():
                 l += 1
             if data[0][r] > pivot : 
                 r -= 1
-        
-            rectangle_list = MakeRectangle(data)
-            canvas.update()
-            canvas.delete("all")
-            drawRectangle(rectangle_list)
-            
-            changeDataColor_Red(rectangle_list, l)
-            changeDataColor_Red(rectangle_list, r)
             
         data[0][end] = data[0][l]
         data[0][l] = pivot
-
-
+        
         rectangle_list = MakeRectangle(data)
         canvas.update()
         canvas.delete("all")
-        drawRectangle(rectangle_list)
-         
+        drawRectangle(rectangle_list)          
         
         quick_sort_internal(start, l-1)
         quick_sort_internal(l+1, end)
@@ -265,7 +233,6 @@ def merge_sort():
             canvas.update()
             canvas.delete("all")
             drawRectangle(rectangle_list)
-            changeDataColor_Red(rectangle_list, left+k)
             
     def merge_sort_internal(left, right):
         if right - left < 2: return
@@ -375,17 +342,6 @@ def drawRectangle(list) :
     for i in range(len(list)) :
         canvas.create_rectangle(list[i][0], list[i][1], list[i][2], list[i][3], fill="white")
 
-
-# data[i]의 색을 빨간색으로 바꿈
-def changeDataColor_Red(list, i) :
-    canvas.create_rectangle(list[i][0], list[i][1], list[i][2], list[i][3], fill="red")
-
-def changeDataColor_Green(list, i) :
-    canvas.create_rectangle(list[i][0], list[i][1], list[i][2], list[i][3], fill="green")
-
-def changeDataColor_Yellow(list, i) :
-    canvas.create_rectangle(list[i][0], list[i][1], list[i][2], list[i][3], fill="yellow")
-
 ##################################################################### 
 # canvas
 canvas = Canvas(root, width=600, height=400, bg = "black", bd=2)
@@ -396,15 +352,16 @@ canvas.create_rectangle(0,0,600,400, fill="yellow")
 
 #####################################################################
 # spinBox
-label_data=Label(root, text="data 개수(1~300)")
-label_data.place(x=650,y=20)
+label=Label(root, text="숫자를 입력하세요.", height=3)
+label.place(x=650,y=60)
+
 
 def value_check(self):
     global data
-    label_data.config(text="data 개수(1~300)")
+    label.config(text="숫자를 입력하세요.")
     valid = False
     if self.isdigit():
-        if (int(self) <= 10000 and int(self) >= 1):
+        if (int(self) <= 500 and int(self) >= 0):
             valid = True
             
             # canvas에 그리기
@@ -419,42 +376,13 @@ def value_check(self):
     return valid
 
 def value_error(self):
-    label_data.config(text=str(self) + "를 입력하셨습니다.\n올바른 값을 입력하세요.")
+    label.config(text=str(self) + "를 입력하셨습니다.\n올바른 값을 입력하세요.")
 
 validate_command = (root.register(value_check), '%P')
 invalid_command = (root.register(value_error), '%P')
 
-spinbox_dataNum = Spinbox(root, from_ = 1, to = 10000, validate = 'all', validatecommand = validate_command, invalidcommand=invalid_command)
-spinbox_dataNum.place(x=650,y=60)
-
-#####################################################################
-# spinBox
-label_speed=Label(root, text="speed(1~10)")
-label_speed.place(x=650,y=100)
-
-
-def value_check_speed(self):
-    global LATE
-    
-    label_speed.config(text="speed(1~10)")
-    valid = False
-    if self.isdigit():
-        if (int(self) <= 10 and int(self) >= 1):
-            valid = True
-            LATE = 0.01*(10-int(self))
-            
-    elif self == '':
-        valid = True
-    return valid
-
-def value_error_speed(self):
-    label_speed.config(text=str(self) + "를 입력하셨습니다.\n올바른 값을 입력하세요.")
-
-validate_command = (root.register(value_check_speed), '%P')
-invalid_command = (root.register(value_error_speed), '%P')
-
-spinbox_LATE = Spinbox(root, from_ = 1, to = 10, validate = 'all', validatecommand = validate_command, invalidcommand=invalid_command)
-spinbox_LATE.place(x=650,y=140)
+spinbox_dataNum = Spinbox(root, from_ = 0, to = 500, validate = 'all', validatecommand = validate_command, invalidcommand=invalid_command)
+spinbox_dataNum.place(x=650,y=100)
 
 ############################################################
 
@@ -526,7 +454,7 @@ bt_7.place(x=650,y=350)
 
 #####################################################################
 # text
-text = Text(root, width=110, height=10)
+text = Text(root, width=105, height=10)
 text.place(x=20,y=450)
 
 
